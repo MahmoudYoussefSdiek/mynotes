@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
+import 'package:mynotes/main.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -70,6 +71,11 @@ class _RegisterViewState extends State<RegisterView> {
                             .createUserWithEmailAndPassword(
                                 email: email, password: password);
                         print(userCredential);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'email-already-in-use') {
                           print('This email already in use');

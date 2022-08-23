@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: LoginView(),
     );
   }
 }
@@ -38,16 +38,40 @@ class HomePage extends StatelessWidget {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
               if (user?.emailVerified ?? false) {
-                print('You are verified user');
               } else {
-                print('You need to verify email first');
+                return VerifyEmailView();
               }
-              return Text('done');
+              return const Text('done');
             default:
               return const Text('Loading...');
           }
         },
       ),
+    );
+  }
+}
+
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({Key? key}) : super(key: key);
+
+  @override
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+}
+
+class _VerifyEmailViewState extends State<VerifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        const Text('Please verify your email address:'),
+        TextButton(
+          onPressed: () async {
+            final user = FirebaseAuth.instance.currentUser;
+            await user?.sendEmailVerification();
+          },
+          child: const Text('Send email verification'),
+        ),
+      ],
     );
   }
 }
