@@ -1,9 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mynotes">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:label="mynotes"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <uses-library
+            android:name="org.apache.http.legacy" android:required="false"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"
