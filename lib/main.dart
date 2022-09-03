@@ -6,6 +6,7 @@ import 'package:mynotes/views/home_screen.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
+import 'dart:developer' as devtool show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                print('Email is verified');
+                devtool.log('Email is verified');
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/HomeScreen/', (route) => false);
               } else {
