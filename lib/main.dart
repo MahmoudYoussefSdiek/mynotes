@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/home_screen.dart';
 import 'package:mynotes/views/login_view.dart';
@@ -20,10 +21,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
       routes: {
-        '/login/': (context) => LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/HomeScreen/': (context) => const HomeScreen(),
-        '/VerifyEmail/': (context) => const VerifyEmailView(),
+        loginRoute: (context) => LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        homeScreenRoute: (context) => const HomeScreen(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       },
     );
   }
@@ -45,8 +46,8 @@ class HomePage extends StatelessWidget {
             if (user != null) {
               if (user.emailVerified) {
                 devtool.log('Email is verified');
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/HomeScreen/', (route) => false);
+                namedRout(context, homeScreenRoute);
+                //  Navigator.pushNamedAndRemoveUntil(context, homeScreenRoute, (route) => false);
               } else {
                 return VerifyEmailView();
               }

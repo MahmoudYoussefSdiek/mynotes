@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtool show log;
 
+import 'package:mynotes/constants/routes.dart';
+
 class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -60,8 +62,8 @@ class _LoginViewState extends State<LoginView> {
                     .signInWithEmailAndPassword(
                         email: email, password: password)
                     .then((value) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/VerifyEmail/', (route) => false);
+                  namedRout(context, verifyEmailRoute);
+                  // Navigator.pushNamedAndRemoveUntil(context, verifyEmailRoute, (route) => false);
                   devtool.log('Login Success');
                 });
                 // devtool.log(userCredential);
@@ -80,8 +82,8 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/register/', (route) => false);
+              namedRout(context, registerRoute);
+              //  Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },
             child: Text('Not registered yet ? Register here!'),
           ),

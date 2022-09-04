@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtool show log;
 
+import 'package:mynotes/constants/routes.dart';
+
 enum MenuAction { logout }
 
 class HomeScreen extends StatefulWidget {
@@ -25,9 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
-                    await FirebaseAuth.instance.signOut().then((value) =>
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login/', (route) => false));
+                    await FirebaseAuth.instance.signOut().then(
+                        (value) => namedRout(context, loginRoute)
+                        //  Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => false)
+                        );
                   }
               }
             },
