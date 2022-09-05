@@ -69,6 +69,7 @@ flutter {
 
 dependencies {
 //    classpath 'com.google.gms:google-services:4.3.13'
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
 }

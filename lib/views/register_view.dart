@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtool show log;
-
+import 'package:mynotes/constants/handle_error.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/navigator.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
       ),
       body: Column(
         children: [
@@ -60,22 +61,39 @@ class _RegisterViewState extends State<RegisterView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
+                await FirebaseAuth.instance
                     .createUserWithEmailAndPassword(
                         email: email, password: password)
                     .then((value) {
-                  devtool.log('Register Complete');
                   namedRout(context, loginRoute);
-                  //  Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => false);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Register Success'),
+                        content:
+                            const Text('Please log in now with your email'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 });
-                devtool.log(userCredential);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'email-already-in-use') {
-                  devtool.log('This email already in use');
+                  showErrorDialog(context, emailAlreadyInUse);
                 } else if (e.code == 'weak-password') {
-                  devtool.log('weak password please enter another one');
+                  showErrorDialog(context, weakPassword);
                 } else if (e.code == 'invalid-email') {
-                  devtool.log('you enter invalid email');
+                  showErrorDialog(context, invalidEmail);
+                } else {
+                  showErrorDialog(context, 'Error :${e.code}');
                 }
               }
             },
@@ -84,9 +102,8 @@ class _RegisterViewState extends State<RegisterView> {
           TextButton(
             onPressed: () {
               namedRout(context, loginRoute);
-              //  Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
             },
-            child: Text('Already registered? Login here!'),
+            child: const Text('Already registered? Login here!'),
           ),
         ],
       ),

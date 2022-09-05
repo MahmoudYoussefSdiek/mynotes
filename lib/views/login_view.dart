@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtool show log;
-
+import 'package:mynotes/constants/handle_error.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/navigator.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -58,24 +61,22 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
+                await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password)
                     .then((value) {
                   namedRout(context, verifyEmailRoute);
-                  // Navigator.pushNamedAndRemoveUntil(context, verifyEmailRoute, (route) => false);
-                  devtool.log('Login Success');
                 });
-                // devtool.log(userCredential);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
-                  devtool.log('User not fount');
+                  showErrorDialog(context, userNotFound);
                 } else if (e.code == 'wrong-password') {
-                  devtool.log('Wrong password');
+                  showErrorDialog(context, wrongPassword);
                 } else {
-                  devtool.log('Something wrong happen');
-                  devtool.log(e.code);
+                  showErrorDialog(context, unknownError);
                 }
+              } catch (e) {
+                showErrorDialog(context, e.toString());
               }
             },
             child: const Text('Login'),
@@ -83,9 +84,8 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
             onPressed: () {
               namedRout(context, registerRoute);
-              //  Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },
-            child: Text('Not registered yet ? Register here!'),
+            child: const Text('Not registered yet ? Register here!'),
           ),
         ],
       ),
