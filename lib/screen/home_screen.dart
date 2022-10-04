@@ -1,18 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/constants/routes_name.dart';
+import 'package:mynotes/screen/sign_in_screen.dart';
 import 'package:mynotes/utilities/navigator.dart';
 
 enum MenuAction { logout }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+  static String routeName = homeScreenRoute;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
-                    await FirebaseAuth.instance
-                        .signOut()
-                        .then((value) => namedRout(context, loginRoute));
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const SnackBar(content: Text('loged out'));
-                        });
+                    await FirebaseAuth.instance.signOut().then(
+                        (value) => namedRout(context, SignInScreen.routeName));
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('You log out'),
+                      ),
+                    );
                   }
               }
             },
@@ -47,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: const Center(
-        child: Text('Welcome to main page'),
+      body: Center(
+        child: Text('Welcome ${user!.email}'),
       ),
     );
   }

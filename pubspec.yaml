@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore:
   firebase_analytics:
   path_provider: ^2.0.11
+  google_sign_in:
+  flutter_facebook_auth:
 
 dev_dependencies:
   flutter_test:

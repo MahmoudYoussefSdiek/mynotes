@@ -1,46 +1,105 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/constants/routes_name.dart';
+import 'package:mynotes/screen/home_screen.dart';
 import 'package:mynotes/utilities/navigator.dart';
 import 'package:mynotes/utilities/show_error_dialog.dart';
+import 'package:mynotes/views/verify_email_body.dart';
 
-class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView({Key? key}) : super(key: key);
+class VerifyEmailScreen extends StatefulWidget {
+  const VerifyEmailScreen({Key? key}) : super(key: key);
+  static String routeName = verifyEmailRoute;
+  //static final user = FirebaseAuth.instance.currentUser;
 
   @override
-  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+  State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
 }
 
-class _VerifyEmailViewState extends State<VerifyEmailView> {
+class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
+  final user = FirebaseAuth.instance.currentUser;
+  bool isEmailVerified = false;
+  bool canResendEmail = false;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    if (!isEmailVerified) {
+      sendVerification(context);
+      timer = Timer.periodic(
+        const Duration(seconds: 3),
+        (_) => checkEmailVerified(),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Future checkEmailVerified() async {
+    await FirebaseAuth.instance.currentUser!.reload();
+    setState(() {
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    });
+    if (isEmailVerified) timer?.cancel();
+  }
+
+  sendVerification(BuildContext context) async {
+    final show = ScaffoldMessenger.of(context);
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+      await user.sendEmailVerification().then((_) {
+        show.showSnackBar(
+          const SnackBar(
+            content: Text('Email verification sent'),
+          ),
+        );
+      });
+      setState(() => canResendEmail = false);
+      await Future.delayed(const Duration(seconds: 10));
+      setState(() => canResendEmail = true);
+    } on FirebaseAuthException catch (e) {
+      showErrorDialog(context, e.code);
+    }
+  }
+
+  Widget showOutput(BuildContext context, bool isVerified, bool canResendEmail,
+      String? userEmail) {
+    if (isVerified) {
+      return VerifyEmailBody(
+        bodyText: 'Your email address verified',
+        buttonText: 'Continue',
+        onTap: () {
+          namedRout(context, HomeScreen.routeName);
+        },
+      );
+    } else {
+      return VerifyEmailBody(
+        bodyText: 'Please verify your email address: $userEmail',
+        buttonText: 'Send email verification',
+        onTap: () {
+          canResendEmail
+              ? sendVerification(context)
+              : showErrorDialog(context,
+                  'we send verification to your email pls confirm your email');
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verify email'),
       ),
-      body: Column(
-        children: <Widget>[
-          const Text('Please verify your email address:'),
-          TextButton(
-            onPressed: () async {
-              try {
-                final user = FirebaseAuth.instance.currentUser!;
-                await user.sendEmailVerification().then((_) {
-                  namedRout(context, homeScreenRoute);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Email verification sent'),
-                    ),
-                  );
-                });
-              } on FirebaseAuthException catch (e) {
-                showErrorDialog(context, e.code);
-              }
-            },
-            child: const Text('Send email verification'),
-          ),
-        ],
-      ),
+      body: showOutput(context, isEmailVerified, canResendEmail, user?.email),
     );
   }
 }

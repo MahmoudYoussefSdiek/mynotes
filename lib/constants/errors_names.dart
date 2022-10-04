@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 const userNotFound = 'user not found';
 const wrongPassword = 'wrong password';
 const emailAlreadyInUse = 'This email already in use';

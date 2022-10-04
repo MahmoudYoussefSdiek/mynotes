@@ -1,18 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/handle_error.dart';
-import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/constants/routes_name.dart';
+import 'package:mynotes/screen/register_screen.dart';
+import 'package:mynotes/services/firebase/email_pasword.dart';
 import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/utilities/show_error_dialog.dart';
+import 'package:mynotes/widget/custom_button.dart';
+import 'package:mynotes/widget/custom_textfield.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+  static String routeName = loginRoute;
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -38,55 +40,30 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Column(
         children: [
-          TextField(
+          CustomTextField(
             controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: 'enter your email',
-            ),
+            hintText: 'enter your email',
+            textInputType: TextInputType.emailAddress,
           ),
-          TextField(
+          CustomTextField(
             controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              hintText: 'enter your password',
-            ),
+            hintText: 'enter your password',
+            textInputType: TextInputType.visiblePassword,
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password)
-                    .then((value) {
-                  namedRout(context, verifyEmailRoute);
-                });
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  showErrorDialog(context, userNotFound);
-                } else if (e.code == 'wrong-password') {
-                  showErrorDialog(context, wrongPassword);
-                } else {
-                  showErrorDialog(context, unknownError);
-                }
-              } catch (e) {
-                showErrorDialog(context, e.toString());
-              }
-            },
-            child: const Text('Login'),
-          ),
-          TextButton(
-            onPressed: () {
-              namedRout(context, registerRoute);
-            },
-            child: const Text('Not registered yet ? Register here!'),
-          ),
+          CustomButton(
+              onTap: () {
+                UserAccount(
+                        context: context,
+                        email: _email.text.trim(),
+                        password: _password.text.trim())
+                    .logIn();
+              },
+              text: 'Login'),
+          CustomButton(
+              onTap: () {
+                namedRout(context, RegisterScreen.routeName);
+              },
+              text: 'Not registered yet ? Register here!')
         ],
       ),
     );
