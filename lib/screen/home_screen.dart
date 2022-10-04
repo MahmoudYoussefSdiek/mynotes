@@ -28,6 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     await FirebaseAuth.instance
                         .signOut()
                         .then((value) => namedRout(context, loginRoute));
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const SnackBar(content: Text('loged out'));
+                        });
                   }
               }
             },
