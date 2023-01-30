@@ -5,7 +5,7 @@ import 'package:mynotes/screen/phone_number_sign_in.dart';
 import 'package:mynotes/screen/register_screen.dart';
 import 'package:mynotes/screen/sign_in_screen.dart';
 import 'package:mynotes/screen/verify_email_screen.dart';
-import 'package:mynotes/views/main_route.dart';
+import 'package:mynotes/views/main_route_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
