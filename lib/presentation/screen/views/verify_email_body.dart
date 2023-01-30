@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/widget/custom_button.dart';
+import 'package:mynotes/presentation/components/widget/custom_button.dart';
 
 class VerifyEmailBody extends StatelessWidget {
   const VerifyEmailBody({

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes_name.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/utilities/show_error_dialog.dart';
-import 'package:mynotes/views/verify_email_body.dart';
+import 'package:mynotes/presentation/components/constants/routes_name.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/components/widget/show_error_dialog.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
+import 'package:mynotes/presentation/screen/views/verify_email_body.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({Key? key}) : super(key: key);

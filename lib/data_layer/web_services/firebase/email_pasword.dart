@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/errors_names.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/screen/login_screen.dart';
-import 'package:mynotes/screen/verify_email_screen.dart';
-import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/utilities/show_error_dialog.dart';
+import 'package:mynotes/presentation/components/constants/errors_names.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/components/widget/show_error_dialog.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
+import 'package:mynotes/presentation/screen/login_screen.dart';
+import 'package:mynotes/presentation/screen/verify_email_screen.dart';
 
 class UserAccount {
   final BuildContext context;

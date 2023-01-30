@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/screen/login_screen.dart';
-import 'package:mynotes/screen/phone_number_sign_in.dart';
-import 'package:mynotes/screen/register_screen.dart';
-import 'package:mynotes/screen/sign_in_screen.dart';
-import 'package:mynotes/screen/verify_email_screen.dart';
-import 'package:mynotes/views/main_route_page.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
+import 'package:mynotes/presentation/screen/login_screen.dart';
+import 'package:mynotes/presentation/screen/phone_number_sign_in.dart';
+import 'package:mynotes/presentation/screen/register_screen.dart';
+import 'package:mynotes/presentation/screen/sign_in_screen.dart';
+import 'package:mynotes/presentation/screen/verify_email_screen.dart';
+import 'package:mynotes/presentation/screen/views/main_route_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

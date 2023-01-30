@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes_name.dart';
-import 'package:mynotes/screen/sign_in_screen.dart';
-import 'package:mynotes/utilities/navigator.dart';
+import 'package:mynotes/presentation/components/constants/routes_name.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/screen/sign_in_screen.dart';
 
 enum MenuAction { logout }
 

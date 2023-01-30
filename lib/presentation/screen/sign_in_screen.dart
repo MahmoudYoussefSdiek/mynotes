@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes_name.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/screen/login_screen.dart';
-import 'package:mynotes/screen/phone_number_sign_in.dart';
-import 'package:mynotes/screen/register_screen.dart';
-import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/services/firebase/google_facebook.dart';
-import 'package:mynotes/widget/custom_button.dart';
+import 'package:mynotes/data_layer/web_services/firebase/google_facebook.dart';
+import 'package:mynotes/presentation/components/constants/routes_name.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/components/widget/custom_button.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
+import 'package:mynotes/presentation/screen/login_screen.dart';
+import 'package:mynotes/presentation/screen/phone_number_sign_in.dart';
+import 'package:mynotes/presentation/screen/register_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);

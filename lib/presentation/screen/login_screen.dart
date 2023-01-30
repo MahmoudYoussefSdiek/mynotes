@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes_name.dart';
-import 'package:mynotes/screen/register_screen.dart';
-import 'package:mynotes/services/firebase/email_pasword.dart';
-import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/widget/custom_button.dart';
-import 'package:mynotes/widget/custom_textfield.dart';
+import 'package:mynotes/data_layer/web_services/firebase/email_pasword.dart';
+import 'package:mynotes/presentation/components/constants/routes_name.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/components/widget/custom_button.dart';
+import 'package:mynotes/presentation/components/widget/custom_textfield.dart';
+import 'package:mynotes/presentation/screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

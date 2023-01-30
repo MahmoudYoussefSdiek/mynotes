@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/screen/sign_in_screen.dart';
-import 'package:mynotes/screen/verify_email_screen.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
+import 'package:mynotes/presentation/screen/sign_in_screen.dart';
+import 'package:mynotes/presentation/screen/verify_email_screen.dart';
 
 class MainRoutPage extends StatelessWidget {
   const MainRoutPage({Key? key}) : super(key: key);

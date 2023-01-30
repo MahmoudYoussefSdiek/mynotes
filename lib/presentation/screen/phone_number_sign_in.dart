@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes_name.dart';
-import 'package:mynotes/screen/home_screen.dart';
-import 'package:mynotes/utilities/navigator.dart';
-import 'package:mynotes/utilities/show_error_dialog.dart';
-import 'package:mynotes/widget/custom_button.dart';
-import 'package:mynotes/widget/custom_textfield.dart';
+import 'package:mynotes/presentation/components/constants/routes_name.dart';
+import 'package:mynotes/presentation/components/widget/navigator.dart';
+import 'package:mynotes/presentation/components/widget/custom_button.dart';
+import 'package:mynotes/presentation/components/widget/custom_textfield.dart';
+import 'package:mynotes/presentation/components/widget/show_error_dialog.dart';
+import 'package:mynotes/presentation/screen/home_screen.dart';
 
 class PhoneNumberSignIn extends StatefulWidget {
   const PhoneNumberSignIn({Key? key}) : super(key: key);
